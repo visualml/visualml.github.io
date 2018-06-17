@@ -1,0 +1,46 @@
+.level {
+    padding: 10px;
+    margin: 0 !important;
+}
+
+#loading {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+}
+
+#loading-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    color: white;
+    font-size: 50px;
+}
+
+#sidebar,
+#toolbar,
+#img-run {
+    padding: 10px !important;
+    margin: 0 !important;
+}
+
+#img-run {
+    display: none;
+}
+
+#toolbar {
+    background: #EEEEEE;
+}
+
+#sidebar-wrapper {
+    background: #DDDDDD;
+}
+
+.monop {
+    font-family: "Consolas", monospace;
+}

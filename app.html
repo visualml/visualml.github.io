@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Visual ML</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.0/css/bulma.min.css">
+    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/two.js/0.6.0/two.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.slim.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.11.6"> </script>
+</head>
+
+<body>
+    <div class="level" id="toolbar">
+        <div class="level-item">
+            <button class="button is-large is-static">
+                <span class="icon is-small">
+                    <img src="static/l-input.jpg">
+                </span>
+                <span>Input/Output Layer</span>
+                <span class="icon is-small">
+                    <img src="static/l-output.png">
+                </span>
+            </button>
+        </div>
+        <div class="level-item">
+            <button class="button is-large" id="add-nn">
+                <span class="icon is-small">
+                    <img src="static/l-neural.png">
+                </span>
+                <span>Neural Layer</span>
+            </button>
+        </div>
+        <div class="level-item">
+            <button class="button is-large" id="add-conv">
+                <span class="icon is-small">
+                    <img src="static/l-conv.jpg">
+                </span>
+                <span>Convolution Layer</span>
+            </button>
+        </div>
+        <div class="level-item">
+            <button class="button is-large" id="add-pool">
+                <span class="icon is-small">
+                    <img src="static/l-pool.jpg">
+                </span>
+                <span>Pooling Layer</span>
+            </button>
+        </div>
+        <div class="level-item">
+            <button class="button is-large" id="add-flatten">
+                <span class="icon is-small">
+                    <img src="static/l-flatten.jpg">
+                </span>
+                <span>Flatten Layer</span>
+            </button>
+        </div>
+        <div class="level-item">
+            <button class="button is-large" id="start-train">
+                <span class="icon is-small">
+                <i class="fas fa-train"></i>
+                </span>
+                <span>Train</span>
+            </button>
+        </div>
+        <div class="level-item">
+            <form>
+                <div class="file is-large">
+                    <label class="file-label">
+                        <input class="file-input" type="file" name="test-file" onchange="testFile()" id="test-file-ipt">
+                        <span class="file-cta">
+                        <span class="file-icon">
+                            <i class="fas fa-upload"></i>
+                        </span>
+                        <span class="file-label">
+                            Test a file
+                        </span>
+                        </span>
+                    </label>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="columns is-gapless">
+        <div class="column is-10">
+            <div id="canvas"></div>
+        </div>
+        <div class="column" id="sidebar-wrapper">
+
+            <div id="sidebar" style="height: 50%;">
+
+            </div>
+
+            <div id="img-run" style="height: 50%;">
+                <img id="img-disp" src="">
+                <p>Prediction: <span id="img-prediction"></span></p>
+            </div>
+
+        </div>
+    </div>
+    <div id="loading">
+        <div id="loading-text">Loading...</div>
+    </div>
+    <script src="static/script.js"></script>
+</body>
+
+</html>
