@@ -630,7 +630,7 @@ $('#start-train').click(function () {
     model.add(tf.layers.inputLayer({
         inputShape: input_size
     }))
-    for(layer of network["layers"]){
+    for(var layer of network["layers"]){
         if(layer["type"]=="nn"){
             model.add(tf.layers.dense({
                  units: layer["size"],
@@ -716,7 +716,7 @@ async function train(){
                 await tf.nextFrame();
             },
             onTrainEnd: async (epoch, logs) => {
-                $("#loading-text").hide()
+                $("#loading").hide()
                 await tf.nextFrame();
             },
             onEpochEnd: async (epoch, logs) => {
@@ -798,17 +798,31 @@ $('#add-pool').click(function() {
 });
 
 
-function testFile() {
+async function testFile() {
 
     var file = document.getElementById("test-file-ipt").files[0];
     if (file) {
-        var reader = new FileReader();
-        reader.readAsArrayBuffer(file);
         $("#img-disp").attr("src", URL.createObjectURL(file));
         $("#img-run").show();
-        reader.onload = function(e) {
-//            socket.emit('run with image', [network["info"]["dataset"], e.target.result]);
+        var input_size = datasetInfo[network["info"]["dataset"]]["input_size"]
+        input_size = [input_size[0], input_size[1]]
+        var img = new Image(input_size[0], input_size[1]);
+        img.src = URL.createObjectURL(file)
+        var image = tf.fromPixels(img)
+        image = tf.div(tf.image.resizeBilinear(image, input_size).toFloat(), tf.scalar(256.0)).expandDims()
+        var dataset = network["info"]["dataset"]
+        if(dataset === "mnist"){
+            image = image.mean(-1, true)
         }
+        const pred = await model.predict(image).data()
+        var pred_output = "Predictions:<br>"
+        var class_num = 0
+        for(var prob of pred_output){
+            pred_output += dataset === "mnist" ? class_num : cifarDict[class_num]
+            pred_output += ": " + (prob*100) + "%<br>"
+            class_num ++
+        }
+        $("#img-prediction").html(pred_output)
     }
 
 }
