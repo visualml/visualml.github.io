@@ -15,7 +15,6 @@ var cifarDict = [
     'Dog'
 ]
 
-
 var loss = function (data) {
     $("#loading-text").html("Loss: " + data);
 }
@@ -618,9 +617,9 @@ var network = {
     }
 }
 
-$('#start-train').click(function () {
-    $("#loading-text").html("Loading Model and Data...");
-    $("#loading").show()
+load_model()
+
+function load_model(){
     var input_size = datasetInfo[network["info"]["dataset"]]["input_size"]
     var output_size = datasetInfo[network["info"]["dataset"]]["output_size"]
     var info = network["info"]
@@ -671,6 +670,14 @@ $('#start-train').click(function () {
         loss: 'categoricalCrossentropy',
         metrics: ['accuracy']
     })
+}
+
+$('#start-train').click(function () {
+    $("#loading-text").html("Loading Model and Data...");
+    $("#loading").show()
+
+    load_model()
+
     jQuery.loadScript = function (url, callback) {
         jQuery.ajax({
             url: url,
@@ -802,12 +809,13 @@ async function testFile() {
 
     var file = document.getElementById("test-file-ipt").files[0];
     if (file) {
-        $("#img-disp").attr("src", URL.createObjectURL(file));
+        var url = URL.createObjectURL(file)
+        $("#img-disp").attr("src", url);
         $("#img-run").show();
         var input_size = datasetInfo[network["info"]["dataset"]]["input_size"]
         input_size = [input_size[0], input_size[1]]
         var img = new Image(input_size[0], input_size[1]);
-        img.src = URL.createObjectURL(file)
+        img.src = url
         var image = tf.fromPixels(img)
         image = tf.div(tf.image.resizeBilinear(image, input_size).toFloat(), tf.scalar(256.0)).expandDims()
         var dataset = network["info"]["dataset"]
@@ -817,7 +825,7 @@ async function testFile() {
         const pred = await model.predict(image).data()
         var pred_output = "Predictions:<br>"
         var class_num = 0
-        for(var prob of pred_output){
+        for(var prob of pred){
             pred_output += dataset === "mnist" ? class_num : cifarDict[class_num]
             pred_output += ": " + (prob*100) + "%<br>"
             class_num ++
