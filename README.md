@@ -1,4 +1,4 @@
-# Visual ML
+# Visual Machine Learning
 
 Machine learning is becoming more and more popular every day. However, learning machine learning can often be a very difficult task. Newcomers are presented with a lot of math, programming, and complicated concepts, distracting them from understanding the basics.
 
